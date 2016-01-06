@@ -810,11 +810,16 @@ public class CalendarPickerView extends ListView {
 
         weekCells.add(
             new MonthCellDescriptor(date, isCurrentMonth, isSelectable, isSelected, isToday,
-                isHighlighted, value, rangeState));
+                isHighlighted,isWeekend(cal), value, rangeState));
         cal.add(DATE, 1);
       }
     }
     return cells;
+  }
+
+  private static boolean isWeekend(Calendar cal) {
+    int week = cal.get(Calendar.DAY_OF_WEEK) - 1;
+    return week == 0 || week == 6;
   }
 
   private boolean containsDate(List<Calendar> selectedCals, Date date) {

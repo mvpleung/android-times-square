@@ -16,17 +16,35 @@ class MonthCellDescriptor {
   private boolean isSelected;
   private final boolean isToday;
   private final boolean isSelectable;
+  private final boolean isWeekend;
   private boolean isHighlighted;
+  private String markValue;
   private RangeState rangeState;
 
   MonthCellDescriptor(Date date, boolean currentMonth, boolean selectable, boolean selected,
-      boolean today, boolean highlighted, int value, RangeState rangeState) {
+      boolean today, boolean highlighted,boolean weekend, int value, RangeState rangeState) {
     this.date = date;
     isCurrentMonth = currentMonth;
     isSelectable = selectable;
     isHighlighted = highlighted;
     isSelected = selected;
     isToday = today;
+    isWeekend = weekend;
+    this.markValue = null;
+    this.value = value;
+    this.rangeState = rangeState;
+  }
+
+  MonthCellDescriptor(Date date, boolean currentMonth, boolean selectable, boolean selected,
+                      boolean today, boolean highlighted,boolean weekend, int value,String markValue, RangeState rangeState) {
+    this.date = date;
+    isCurrentMonth = currentMonth;
+    isSelectable = selectable;
+    isHighlighted = highlighted;
+    isSelected = selected;
+    isToday = today;
+    isWeekend = weekend;
+    this.markValue = markValue;
     this.value = value;
     this.rangeState = rangeState;
   }
@@ -63,12 +81,24 @@ class MonthCellDescriptor {
     return isToday;
   }
 
+  public boolean isWeekend() {
+    return isWeekend;
+  }
+
   public RangeState getRangeState() {
     return rangeState;
   }
 
   public void setRangeState(RangeState rangeState) {
     this.rangeState = rangeState;
+  }
+
+  public String getMarkValue() {
+    return markValue;
+  }
+
+  public void setMarkValue(String markValue) {
+    this.markValue = markValue;
   }
 
   public int getValue() {
@@ -91,6 +121,10 @@ class MonthCellDescriptor {
         + isSelectable
         + ", isHighlighted="
         + isHighlighted
+        +", isWeekend="
+        +isWeekend
+        +", markValue="
+        + markValue
         + ", rangeState="
         + rangeState
         + '}';
