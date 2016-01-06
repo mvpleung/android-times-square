@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -46,13 +47,15 @@ public class MonthView extends LinearLayout {
 
     final int originalDayOfWeek = today.get(Calendar.DAY_OF_WEEK);
 
-    view.isRtl = isRtl(locale);
-    int firstDayOfWeek = today.getFirstDayOfWeek();
-    final CalendarRowView headerRow = (CalendarRowView) view.grid.getChildAt(0);
-    for (int offset = 0; offset < 7; offset++) {
-      today.set(Calendar.DAY_OF_WEEK, getDayOfWeek(firstDayOfWeek, offset, view.isRtl));
-      final TextView textView = (TextView) headerRow.getChildAt(offset);
-      textView.setText(weekdayNameFormat.format(today.getTime()));
+    if(displayHeader) {
+      view.isRtl = isRtl(locale);
+      int firstDayOfWeek = today.getFirstDayOfWeek();
+      final CalendarRowView headerRow = (CalendarRowView) view.grid.getChildAt(0);
+      for (int offset = 0; offset < 7; offset++) {
+        today.set(Calendar.DAY_OF_WEEK, getDayOfWeek(firstDayOfWeek, offset, view.isRtl));
+        final TextView textView = (TextView) headerRow.getChildAt(offset);
+        textView.setText(weekdayNameFormat.format(today.getTime()));
+      }
     }
     today.set(Calendar.DAY_OF_WEEK, originalDayOfWeek);
     view.listener = listener;
@@ -117,7 +120,7 @@ public class MonthView extends LinearLayout {
           }
           cellView.setEnabled(cell.isCurrentMonth());
           cellView.setClickable(!displayOnly);
-
+          cellView.setWeekend(cell.isWeekend());
           cellView.setSelectable(cell.isSelectable());
           cellView.setSelected(cell.isSelected());
           cellView.setCurrentMonth(cell.isCurrentMonth());

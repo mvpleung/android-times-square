@@ -29,11 +29,15 @@ public class CalendarCellView extends TextView {
   private static final int[] STATE_RANGE_LAST = {
       R.attr.tsquare_state_range_last
   };
+  private static final int[] STATE_WEEKEND = {
+          R.attr.tsquare_state_weekend
+  };
 
   private boolean isSelectable = false;
   private boolean isCurrentMonth = false;
   private boolean isToday = false;
   private boolean isHighlighted = false;
+  private boolean isWeekend = false;
   private RangeState rangeState = RangeState.NONE;
 
   @SuppressWarnings("UnusedDeclaration") //
@@ -66,6 +70,11 @@ public class CalendarCellView extends TextView {
     refreshDrawableState();
   }
 
+  public void setWeekend(boolean weekend) {
+    isWeekend = weekend;
+    refreshDrawableState();
+  }
+
   public boolean isCurrentMonth() {
     return isCurrentMonth;
   }
@@ -95,6 +104,10 @@ public class CalendarCellView extends TextView {
 
     if (isHighlighted) {
       mergeDrawableStates(drawableState, STATE_HIGHLIGHTED);
+    }
+
+    if (isWeekend) {
+      mergeDrawableStates(drawableState, STATE_WEEKEND);
     }
 
     if (rangeState == MonthCellDescriptor.RangeState.FIRST) {
